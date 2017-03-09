@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import processing.core.PApplet;
@@ -18,7 +19,7 @@ public class Logica {
 	private ArrayList<User> user = new ArrayList<User>();
 	private ArrayList<User> userBu = new ArrayList<User>();
 
-	private TreeSet<User> ordenarDos = new TreeSet<User>();
+	private TreeSet<User> userT = new TreeSet<User>(new ComPeso());
 
 	public Logica(PApplet app) {
 		this.app = app;
@@ -65,6 +66,14 @@ public class Logica {
 			break;
 
 		case 2: //
+			Iterator<User> it = userT.iterator();
+			int j = 0;
+			while (it.hasNext()) {
+				User user = (User) it.next();
+				user.pintar(30 + 30*j);
+				j++;
+			}
+			
 			break;
 
 		case 3: //
@@ -79,6 +88,11 @@ public class Logica {
 	public void tecla() {
 		if (app.key == '1') {
 			pintar = 1;
+		}
+		else if (app.key == '2') {
+			pintar = 2;
+			userT.addAll(user);
+			user.clear();
 		}
 	}
 
