@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -19,8 +21,9 @@ public class Logica {
 	private ArrayList<User> user = new ArrayList<User>();
 	private ArrayList<User> userBu = new ArrayList<User>();
 
-	private TreeSet<User> userT = new TreeSet<User>(new ComPeso());
-
+	private TreeSet<User> userT = new TreeSet<User>(new ComEdad());
+	private HashSet<User> userH =  new HashSet<User>();
+	
 	public Logica(PApplet app) {
 		this.app = app;
 		usuario = app.loadStrings("../data/usuarios"); // cargo el txt
@@ -45,7 +48,7 @@ public class Logica {
 
 			user.add(new User(app, nombre, apellido, r, g, b, cedula, edad, peso));
 		}
-
+		userBu.addAll(user);
 	}
 
 	public void display() {
@@ -66,34 +69,69 @@ public class Logica {
 			break;
 
 		case 2: //
+			Collections.sort(user, new CompPeso());
+			for (int i = 0; i < user.size(); i++) {
+				user.get(i).pintar(30 + 30 * i);
+			}
+
+			break;
+
+		case 3: //
 			Iterator<User> it = userT.iterator();
 			int j = 0;
 			while (it.hasNext()) {
 				User user = (User) it.next();
-				user.pintar(30 + 30*j);
+				user.pintar(30 + 30 * j);
 				j++;
 			}
-			
+
 			break;
 
-		case 3: //
-			break;
-			
 		case 4: //
+			Collections.shuffle(user);
+			int k=0;
+			for (User user : userH) {
+				k++;
+				user.pintar(30 + 30*k);
+			}
 			break;
 
 		}
 	}
 
 	public void tecla() {
+		
 		if (app.key == '1') {
-			pintar = 1;
-		}
-		else if (app.key == '2') {
-			pintar = 2;
-			userT.addAll(user);
 			user.clear();
+			userT.clear();
+			userH.clear();
+			user.addAll(userBu);
+			pintar = 1;
+		} 
+		
+		else if (app.key == '2') {
+			user.clear();
+			userT.clear();
+			userH.clear();
+			user.addAll(userBu);
+			pintar = 2;
+		} 
+		
+		else if (app.key == '3') {
+			user.clear();
+			userT.clear();
+			userH.clear();
+			userT.addAll(userBu);
+			pintar = 3;
 		}
+		
+		 else if (app.key == '4') {
+				user.clear();
+				userT.clear();
+				userH.clear();
+				userH.addAll(userBu);
+				pintar = 4;
+			}
 	}
 
 }
