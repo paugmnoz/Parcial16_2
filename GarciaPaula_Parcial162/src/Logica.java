@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.TreeSet;
 
 import processing.core.PApplet;
 
@@ -11,11 +13,15 @@ public class Logica {
 	private String nombre, apellido;
 	private int cedula, edad, r, g, b, peso;
 
+	private int pintar, tecla;
+
 	private ArrayList<User> user = new ArrayList<User>();
 	private ArrayList<User> userBu = new ArrayList<User>();
 
-	public Logica(PApplet app) {
+	private TreeSet<User> ordenarDos = new TreeSet<User>();
 
+	public Logica(PApplet app) {
+		this.app = app;
 		usuario = app.loadStrings("../data/usuarios"); // cargo el txt
 		info = app.loadStrings("../data/informacion");
 		tono = app.loadStrings("../data/tonos");
@@ -39,16 +45,41 @@ public class Logica {
 			user.add(new User(app, nombre, apellido, r, g, b, cedula, edad, peso));
 		}
 
-		userBu.addAll(user);
 	}
 
 	public void display() {
-		for (int i = 0; i < user.size(); i++) {
-			user.get(i).pintar(30 + 30 * i);
+
+		switch (pintar) {
+
+		case 0:
+			for (int i = 0; i < user.size(); i++) {
+				user.get(i).pintar(30 + 30 * i);
+			}
+			break;
+
+		case 1: // ORDEN NATURAL
+			Collections.sort(user);
+			for (int i = 0; i < user.size(); i++) {
+				user.get(i).pintar(30 + 30 * i);
+			}
+			break;
+
+		case 2: //
+			break;
+
+		case 3: //
+			break;
+			
+		case 4: //
+			break;
+
 		}
 	}
 
-	public void key() {
-		
+	public void tecla() {
+		if (app.key == '1') {
+			pintar = 1;
+		}
 	}
+
 }

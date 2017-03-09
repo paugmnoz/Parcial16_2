@@ -25,7 +25,8 @@ public class Main extends PApplet {
 	}
 
 	@Override
-	public void keyPressed() {
-		app.key();
+	public void keyReleased() {
+		app.tecla();
 	}
+
 }
